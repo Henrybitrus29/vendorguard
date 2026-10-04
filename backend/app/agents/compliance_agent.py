@@ -46,7 +46,6 @@ class ComplianceState(TypedDict, total=False):
     compliance_passed: bool
     confidence_score: float
     reasoning: str
-    # added
     decision: Decision
     status: str
     flags: List[str]
@@ -88,7 +87,7 @@ class Evaluation(BaseModel):
     injection_suspected: bool
 
 
-# ───────────────────────── LLM setup (lazy, so imports never crash) ─────────────────────────
+# ───────────────────────── LLM setup ─────────────────────────
 
 @lru_cache(maxsize=1)
 def _llm() -> ChatGroq:
@@ -96,7 +95,7 @@ def _llm() -> ChatGroq:
     if not key:
         raise RuntimeError("GROQ_API_KEY is not set")
     return ChatGroq(
-        model=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
+        model=os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
         temperature=0.0,
         groq_api_key=key,
         timeout=60,
@@ -106,12 +105,12 @@ def _llm() -> ChatGroq:
 
 @lru_cache(maxsize=1)
 def _classifier():
-    return _llm().with_structured_output(Classification).with_retry(stop_after_attempt=3)
+    return _llm().with_structured_output(Classification, method="json_mode").with_retry(stop_after_attempt=3)
 
 
 @lru_cache(maxsize=1)
 def _evaluator():
-    return _llm().with_structured_output(Evaluation).with_retry(stop_after_attempt=3)
+    return _llm().with_structured_output(Evaluation, method="json_mode").with_retry(stop_after_attempt=3)
 
 
 # ───────────────────────── Untrusted-input handling ─────────────────────────
