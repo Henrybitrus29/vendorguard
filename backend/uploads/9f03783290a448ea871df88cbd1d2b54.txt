@@ -1,0 +1,5 @@
+MASTER SERVICES AGREEMENT
+Between Nameless Co (the Vendor) and Example Client Inc.
+1. Services. Consulting.
+2. Liability and Indemnity. The Vendor shall indemnify the Client.
+3. SLA. 99.5% uptime.

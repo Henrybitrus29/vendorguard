@@ -1,0 +1,6 @@
+MASTER SERVICES AGREEMENT
+Between Brightwave Software Ltd (the Vendor) and Example Client Inc.
+Tax ID / EIN: 47-1234567
+1. Services. The Vendor provides software development services.
+2. Liability and Indemnity. The Vendor shall indemnify the Client against third-party claims.
+3. Service Levels. The Vendor guarantees 99.9% monthly uptime with a 4-hour incident response SLA.
